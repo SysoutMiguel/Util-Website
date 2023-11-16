@@ -18,7 +18,7 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("bestTime", JSON.stringify(bestTime));
     console.log(timer);
-  }, [tenzies]);
+  }, [[tenzies, bestTime, timer]]);
 
   useEffect(() => {
     let interval;
@@ -31,7 +31,7 @@ export default function App() {
     return () => {
       clearInterval(interval);
     };
-  }, [tenzies]);
+  }, [[tenzies, bestTime, timer]]);
 
   React.useEffect(() => {
     const allHeld = dice.every((die) => die.isHeld);

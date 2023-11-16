@@ -7,7 +7,8 @@ export default function WeatherApp(props) {
   const [zipCode, setZipCode] = React.useState("");
   const [coordinates, setCoordinates] = React.useState([]);
   const [dailyForecast, setDailyForecast] = React.useState([]);
-  const apiKey = "2916aeb0d2f58854a3be8f988f8ce055";
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const zipKey = process.env.REACT_APP_ZIP_KEY
 
   React.useEffect(() => {
     // This effect runs whenever weatherData is updated
@@ -31,7 +32,7 @@ export default function WeatherApp(props) {
   function handleSubmit(event) {
     event.preventDefault();
     fetch(
-      `http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=${apiKey}`
+      `http://api.openweathermap.org/geo/1.0/zip?zip=${zipCode}&appid=${zipKey}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -39,7 +40,7 @@ export default function WeatherApp(props) {
         if (data.lon && data.lat) {
           console.log("coord:" + data.lat + " " + data.lon);
           fetch(
-            `https://api.tomorrow.io/v4/weather/forecast?location=${data.lat},${data.lon}&apikey=F3EbdqEYGjqFg6lvkqJBE10XrKHF5FqL`
+            `https://api.tomorrow.io/v4/weather/forecast?location=${data.lat},${data.lon}&apikey=${apiKey}`
           )
             .then((res) => res.json())
             .then((weatherData) => {
